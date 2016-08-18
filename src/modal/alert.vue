@@ -1,6 +1,6 @@
 <template>
 
-<modal v-bind:show.sync="show" v-bind:close-via-dimmer="false">
+<modal v-ref:alert v-bind:show.sync="show" v-bind:close-via-dimmer="false">
   <div class="am-modal-hd" slot="header" v-if="title !== ''">{{ title }}</div>
   <div class="am-modal-bd" slot="body"><slot>default alert</slot></div>
   <div class="am-modal-footer" slot="footer">
@@ -30,6 +30,12 @@ export default {
 
   components: {
     modal
+  },
+
+  watch: {
+    show: function (val, oldVal) {
+      console.log('alert show', val, this.$el.offsetHeight, this);
+    },
   },
 
   methods: {

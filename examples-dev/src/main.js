@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import routes from './routes';
 import amazeuiVue from 'amazeui-vue';
 
-Vue.config.debug = true;
+// Vue.config.debug = true;
 
 Vue.use(amazeuiVue);
 Vue.use(VueRouter);

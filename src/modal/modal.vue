@@ -1,14 +1,23 @@
 <template>
 
-<div class="am-modal" tabindex="-1" v-bind:class="{'am-modal-active': show, 'am-modal-lg': lg}" v-show="show">
-  <div class="am-modal-dialog">
-    <slot name="header"></slot>
-    <slot name="body"></slot>
-    <slot name="footer"></slot>
+<div v-show="show">
+  <div class="am-modal" tabindex="-1"
+    v-show="show"
+    v-bind:class="{'am-modal-active': show, 'am-modal-lg': lg}"
+    v-bind:style="{'margin-top': marginTop + 'px'}">
+    <div class="am-modal-dialog">
+      <slot name="header"></slot>
+      <slot name="body"></slot>
+      <slot name="footer"></slot>
+    </div>
+  </div>
+
+  <div class="am-dimmer"
+    v-bind:class="{'am-active': show}"
+    v-on:click="close"
+    transition="modal-fade">
   </div>
 </div>
-
-<div class="am-dimmer" v-bind:class="{'am-active': show}" v-show="show" v-on:click="close" transition="modal-fade"></div>
 
 </template>
 
@@ -29,6 +38,7 @@
 .am-modal-lg {
   width: 1024px;
   margin-left: -512px;
+  margin-top: 0!important;
   top: 100px;
 }
 
@@ -50,6 +60,10 @@ export default {
     lg: {
       type: Boolean,
       default: false
+    },
+    marginTop: {
+      type: Number,
+      default: 0
     }
   },
 
@@ -72,6 +86,16 @@ export default {
       leaveCancelled(el) {
       }
     }
+  },
+
+  watch: {
+    show: function (val, oldVal) {
+      console.log('modal', this.$el, this.$el.offsetHeight);
+      if (val) {
+        var dialog = this.$el.querySelector('.am-modal');
+        this.marginTop = - parseInt(dialog.offsetHeight / 2);
+      }
+    },
   },
 
   methods: {
